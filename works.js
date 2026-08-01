@@ -191,21 +191,37 @@ const WORKS = [
 {
     id: "worldcup-01",
     category: "世界杯活动",
-    title: "世界杯活动 · 足球小将众安",
+    title: "世界杯活动 · 众安合集",
     platform: "视频号 / 小程序",
-    role: "节点策划 / 活动视频 / 物料联动",
-    video: "videos/众安世界杯/足球小将众安.mp4",
+    role: "节点策划 / 活动视频 / 小程序物料",
     cover: "covers/worldcup-01.png",
+    video: "videos/众安世界杯/足球小将众安.mp4",
+    episodes: [
+      {
+        title: "足球小将众安",
+        video: "videos/众安世界杯/足球小将众安.mp4",
+        cover: "covers/worldcup-01.png",
+      },
+      {
+        title: "花式停球",
+        video: "videos/众安世界杯/花式停球.mp4",
+        cover: "covers/worldcup-fancy.jpg",
+      },
+    ],
+    gallery: ["assets/worldcup/miniprogram.jpg"],
     desc: "能借势世界杯等大事件做活动视频策划，也能联动小程序宣传物料，把内容接到曝光与转化目标上。",
-    highlight: "大事件借势选题 · AI 动画成片 · 视频与小程序双端物料",
-    method: "活动节点排期 → 视频脚本/成片 → 小程序宣传素材 → 复盘",
-    outputs: "《足球小将众安》活动成片（已压缩网页版）",
-    resumeLine: "完成世界杯节点活动视频《足球小将众安》策划与成片交付，服务曝光与转化联动。",
+    highlight:
+      "足球小将众安 + 花式停球双成片 · 小程序宣传图 · 大事件借势选题 · 视频与转化物料联动",
+    method: "活动节点排期 → 多条活动视频脚本/成片 → 小程序宣传素材 → 复盘",
+    outputs:
+      "《足球小将众安》《花式停球》活动成片；小程序宣传物料",
+    resumeLine:
+      "完成世界杯节点活动视频《足球小将众安》《花式停球》与小程序宣传物料，服务曝光与转化联动。",
     year: "2026",
     stats: [
       { label: "能力", value: "节点→成片" },
-      { label: "主题", value: "足球小将" },
-      { label: "状态", value: "可播" },
+      { label: "成片", value: "2 条" },
+      { label: "物料", value: "小程序图" },
     ],
   },
 {
