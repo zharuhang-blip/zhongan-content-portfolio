@@ -11,3 +11,4 @@ docs/*.docx
 
 # Optional local-only scratch
 *.log
+.github/workflows/
