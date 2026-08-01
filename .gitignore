@@ -1,0 +1,13 @@
+# Dependencies / OS
+.DS_Store
+Thumbs.db
+node_modules/
+
+# Local packaging / oversized source decks (not needed on public site)
+portfolio-public.zip
+docs/guanxia-plan.pdf
+docs/guanxia-plan.pptx
+docs/*.docx
+
+# Optional local-only scratch
+*.log
