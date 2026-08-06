@@ -841,6 +841,16 @@ main,
   letter-spacing: 0.04em;
 }
 
+.footer-note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-note a:hover {
+  color: var(--blue);
+}
+
 .player {
   position: fixed;
   inset: 0;
