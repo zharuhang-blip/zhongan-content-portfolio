@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreeConvert Concept · Image Converter by ruhang.zha</title>
-  <meta name="description" content="Unofficial FreeConvert concept redesign. Convert JPEG, PNG, WebP in your browser — files never leave your device." />
+  <title>FreeConvert Concept · Image & Video by ruhang.zha</title>
+  <meta name="description" content="Unofficial FreeConvert concept redesign. Convert images and compress videos in your browser — files never leave your device." />
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,15 +33,24 @@
 
   <main>
     <section class="hero" id="top">
+      <div class="mode-tabs" role="tablist" aria-label="Tool mode">
+        <button type="button" class="mode-tab is-active" role="tab" aria-selected="true" data-mode="image" id="tab-image">
+          Image Convert
+        </button>
+        <button type="button" class="mode-tab" role="tab" aria-selected="false" data-mode="video" id="tab-video">
+          Video Compress
+        </button>
+      </div>
+
       <div class="hero__copy">
-        <p class="hero__eyebrow">Image · browser-only</p>
-        <h1 class="hero__title">File Converter</h1>
-        <p class="hero__desc">Easily convert images from one format to another — entirely in your browser.</p>
+        <p class="hero__eyebrow" id="hero-eyebrow">Image · browser-only</p>
+        <h1 class="hero__title" id="hero-title">File Converter</h1>
+        <p class="hero__desc" id="hero-desc">Easily convert images from one format to another — entirely in your browser.</p>
         <div class="hero__cta">
           <button type="button" class="btn btn-glow" id="btn-choose">
             Choose Files
           </button>
-          <p class="hero__hint">JPEG · PNG · WebP · GIF · BMP · Max ~50MB each</p>
+          <p class="hero__hint" id="hero-hint">JPEG · PNG · WebP · GIF · BMP · Max ~50MB each</p>
         </div>
       </div>
 
@@ -50,22 +59,16 @@
         id="dropzone"
         role="button"
         tabindex="0"
-        aria-label="Drop images here or press Enter to choose files"
+        aria-label="Drop files here or press Enter to choose files"
       >
         <div class="dropzone__stars" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
-        <p class="dropzone__title">Drop any images here</p>
+        <p class="dropzone__title" id="dropzone-title">Drop any images here</p>
         <p class="dropzone__sub">Files stay on your device. Nothing is uploaded.</p>
       </div>
 
-      <input
-        type="file"
-        id="file-input"
-        accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,.jpg,.jpeg,.png,.webp,.gif,.bmp"
-        multiple
-        hidden
-      />
+      <input type="file" id="file-input" multiple hidden />
     </section>
 
     <section class="workspace" id="workspace" hidden>
@@ -76,7 +79,7 @@
 
       <ul class="file-list" id="file-list"></ul>
 
-      <div class="opts">
+      <div class="opts" id="opts-image">
         <label class="opt">
           <span>Convert to</span>
           <select id="opt-format">
@@ -97,11 +100,39 @@
         <button type="button" class="btn btn-glow" id="btn-convert">Convert</button>
       </div>
 
+      <div class="opts" id="opts-video" hidden>
+        <label class="opt">
+          <span>Quality (CRF)</span>
+          <select id="opt-crf">
+            <option value="23">High · CRF 23</option>
+            <option value="28" selected>Balanced · CRF 28</option>
+            <option value="32">Smaller · CRF 32</option>
+            <option value="36">Tiny · CRF 36</option>
+          </select>
+        </label>
+        <label class="opt">
+          <span>Resolution</span>
+          <select id="opt-scale">
+            <option value="0" selected>Original</option>
+            <option value="1080">1080p</option>
+            <option value="720">720p</option>
+            <option value="480">480p</option>
+          </select>
+        </label>
+        <label class="opt">
+          <span>Output</span>
+          <select id="opt-vout" disabled>
+            <option value="mp4" selected>MP4 (H.264)</option>
+          </select>
+        </label>
+        <button type="button" class="btn btn-glow" id="btn-compress">Compress</button>
+      </div>
+
       <div class="progress" id="progress" hidden>
         <div class="progress__stars" id="progress-stars" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
-        <p class="progress__label" id="progress-label">Converting…</p>
+        <p class="progress__label" id="progress-label">Working…</p>
       </div>
 
       <div class="results" id="results" hidden>
@@ -115,16 +146,16 @@
 
     <section class="features" id="privacy">
       <article class="feature">
-        <h3>Convert any image</h3>
-        <p>JPEG, PNG, WebP, GIF, and BMP in. JPEG, PNG, WebP out — with quality and resize controls.</p>
+        <h3>Images & video</h3>
+        <p>Convert common image formats, or compress MP4 / WebM / MOV locally with FFmpeg.wasm.</p>
       </article>
       <article class="feature">
         <h3>Works in your browser</h3>
-        <p>No install. Runs on Windows, Mac, Linux, or mobile — wherever modern browsers run.</p>
+        <p>No install. First video run downloads a ~30MB encoder once; then it runs on your device.</p>
       </article>
       <article class="feature">
         <h3>Privacy by design</h3>
-        <p>Conversion happens locally via Canvas. Your files are never uploaded to a server.</p>
+        <p>Processing stays on your machine. Your files are never uploaded to a server.</p>
       </article>
     </section>
   </main>
@@ -137,6 +168,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
-  <script src="app.js" defer></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

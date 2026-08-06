@@ -39,5 +39,6 @@
 ## 产品边界
 
 - FreeConvert 流程：选文件 → 选格式 → 转换 → 下载
-- 仅图片，浏览器端 `canvas.toBlob`，文件不上传
+- 图片：浏览器端 `canvas.toBlob`，文件不上传
+- 视频：浏览器端 FFmpeg.wasm（单线程 core），本机压缩为 H.264 MP4；首次加载约 30MB 引擎
 - 页眉/页脚：「Unofficial concept redesign · Not affiliated with FreeConvert.com」

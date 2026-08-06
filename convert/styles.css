@@ -387,9 +387,43 @@ main,
 .workspace[hidden],
 .progress[hidden],
 .results[hidden],
+.opts[hidden],
 #btn-zip[hidden],
 #opt-avif[hidden] {
   display: none !important;
+}
+
+/* —— Mode tabs —— */
+.mode-tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--line);
+  width: fit-content;
+  max-width: 100%;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+}
+
+.mode-tab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 0.65rem 1.15rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  transition: color 0.25s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.mode-tab.is-active {
+  color: var(--ink);
+  background: rgba(232, 200, 122, 0.14);
+  box-shadow: inset 0 -2px 0 var(--glow);
+}
+
+.mode-tab:hover:not(.is-active) {
+  color: var(--ink);
 }
 
 .workspace__head,
@@ -436,6 +470,20 @@ main,
   height: 56px;
   object-fit: cover;
   background: #1a1c24;
+}
+
+video.file-item__thumb,
+video.result-item__thumb {
+  display: block;
+}
+
+.result-item:has(video.result-item__thumb) {
+  grid-template-columns: 120px 1fr auto;
+}
+
+video.result-item__thumb {
+  width: 120px;
+  height: 68px;
 }
 
 .file-item__meta,
