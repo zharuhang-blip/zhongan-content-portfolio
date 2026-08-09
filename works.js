@@ -267,7 +267,7 @@ const WORKS = [
     title: "ODER STUDIO · 夏日模特 Campaign",
     platform: "Lovart · 时尚视觉系列",
     role: "视觉方向 / 模特设定 / Prompt 与出图筛选",
-    video: "",
+    video: "videos/oder/campaign.mp4",
     cover: "covers/oder-01.jpg",
     gallery: [
       "assets/oder/campaign-01.jpg",
@@ -283,20 +283,20 @@ const WORKS = [
       "assets/oder/campaign-11.jpg",
       "assets/oder/campaign-12.jpg",
     ],
-    desc: "能搭北欧感模特设定与系列调性，也能用 Lovart 批量出街拍 / 夜闪 / 海滩场景，并筛成可投放的 Campaign 成组视觉。",
+    desc: "能搭北欧感模特设定与系列调性，也能用 Lovart 批量出街拍 / 夜闪 / 海滩场景，并筛成可投放的 Campaign 成组视觉与动态片。",
     highlight:
-      "角色一致性可控 · 硬光胶片颗粒 · 薄荷绿统一色 · 斑马线 / 咖啡馆 / 夜闪街拍成组",
+      "角色一致性可控 · 硬光胶片颗粒 · 薄荷绿统一色 · 斑马线 / 咖啡馆 / 夜闪街拍成组 · Campaign 动态成片可播",
     method:
-      "品牌美学基调 → 模特设定卡 → 分场景 Prompt → Lovart 出图 → 感知哈希去重与精选",
+      "品牌美学基调 → 模特设定卡 → 分场景 Prompt → Lovart 出图 → 感知哈希去重与精选 → 动态成片",
     outputs:
-      "ODER STUDIO 夏日 Campaign 精选 12 张（已去重）；封面主视觉",
+      "ODER STUDIO 夏日 Campaign 精选 12 张（已去重）；封面主视觉；Campaign 动态成片",
     resumeLine:
-      "用 Lovart 完成 ODER STUDIO 夏日模特 Campaign：统一人设与色调，交付街拍与夜闪成组视觉。",
+      "用 Lovart 完成 ODER STUDIO 夏日模特 Campaign：统一人设与色调，交付街拍与夜闪成组视觉及动态成片。",
     year: "2026",
     stats: [
-      { label: "能力", value: "设定→成组" },
+      { label: "能力", value: "设定→成片" },
       { label: "工具", value: "Lovart" },
-      { label: "精选", value: "12 张" },
+      { label: "精选", value: "12 张+视频" },
     ],
   },
 {
