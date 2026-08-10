@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>查如杭 · 小红书科技垂类运营简历</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0e1624;
+      --muted: #5c6b7e;
+      --navy: #0b1c33;
+      --cyan: #2ec5ff;
+      --cyan-dim: #1a8fc4;
+      --amber: #ff9f43;
+      --panel: #f4f8fc;
+      --line: rgba(46, 197, 255, 0.28);
+      --card: rgba(11, 28, 51, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    @page { size: A4; margin: 0; }
+
+    html, body {
+      background: #0b1c33;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background:
+        linear-gradient(180deg, rgba(11,28,51,0.03), transparent 120px),
+        radial-gradient(circle at 1px 1px, rgba(46,197,255,0.09) 1px, transparent 1.4px),
+        linear-gradient(180deg, #f7fbff 0%, #eef5fb 100%);
+      background-size: auto, 14px 14px, auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      height: 38mm;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(46,197,255,0.35);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: saturate(1.15) contrast(1.05);
+    }
+
+    .hero-mask {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(7,16,32,0.88) 0%, rgba(7,16,32,0.55) 48%, rgba(7,16,32,0.35) 100%),
+        linear-gradient(0deg, rgba(7,16,32,0.55), transparent 55%);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 7mm 11mm 0;
+      color: #e8f6ff;
+    }
+
+    .version-note {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6.2pt;
+      letter-spacing: 0.16em;
+      color: var(--cyan);
+      margin-bottom: 1.8mm;
+    }
+
+    .name {
+      font-family: "Noto Serif SC", serif;
+      font-size: 24pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 18px rgba(46,197,255,0.35);
+    }
+
+    .intent {
+      margin-top: 2mm;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 7pt;
+      letter-spacing: 0.04em;
+      color: rgba(232,246,255,0.88);
+    }
+
+    .intent span {
+      color: var(--cyan);
+    }
+
+    .body {
+      padding: 4.5mm 11mm 8mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-bar {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 0.85fr 1.35fr;
+      gap: 2mm;
+      margin-bottom: 3.6mm;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .meta-item {
+      padding: 2.6mm 2.8mm;
+      background: linear-gradient(160deg, rgba(11,28,51,0.96), rgba(14,40,70,0.9));
+      border: 1px solid rgba(46,197,255,0.32);
+      box-shadow: 0 0 0 1px rgba(46,197,255,0.06), 0 8px 18px rgba(11,28,51,0.14);
+      min-height: 14mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8mm;
+    }
+
+    .meta-item .label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6pt;
+      letter-spacing: 0.14em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .meta-item .value {
+      font-size: 8.6pt;
+      line-height: 1.35;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .meta-item .value a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 8.8pt;
+    }
+
+    .meta-item .value .sub {
+      display: block;
+      margin-top: 0.4mm;
+      font-size: 7.2pt;
+      font-weight: 400;
+      color: rgba(232,246,255,0.82);
+    }
+
+    .meta-item.wide {
+      /* availability */
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 24mm;
+      gap: 5mm;
+      align-items: start;
+    }
+
+    .photo-wrap {
+      position: relative;
+    }
+
+    .photo {
+      width: 24mm;
+      height: 28mm;
+      object-fit: cover;
+      border: 1px solid rgba(46,197,255,0.45);
+      box-shadow: 0 0 0 3px rgba(46,197,255,0.08), 0 10px 24px rgba(11,28,51,0.18);
+      background: #ddd;
+    }
+
+    .photo-cap {
+      margin-top: 1.5mm;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 5.6pt;
+      letter-spacing: 0.08em;
+      color: var(--cyan-dim);
+      text-align: center;
+    }
+
+    .summary {
+      margin-bottom: 3.2mm;
+      padding: 2.6mm 3mm;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(232,244,255,0.75));
+      border: 1px solid rgba(46,197,255,0.22);
+      border-left: 2.5px solid var(--cyan);
+      box-shadow: inset 0 0 20px rgba(46,197,255,0.04);
+      font-size: 7.5pt;
+      line-height: 1.5;
+      color: #1a2738;
+    }
+
+    section { margin-bottom: 2.6mm; }
+
+    .sec-title {
+      display: flex;
+      align-items: center;
+      gap: 2.5mm;
+      margin-bottom: 1.8mm;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 7pt;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .sec-title::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      background: var(--cyan);
+      box-shadow: 0 0 8px rgba(46,197,255,0.7);
+      transform: rotate(45deg);
+    }
+
+    .sec-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(46,197,255,0.45), transparent);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm 6mm;
+    }
+
+    .edu-row, .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 3mm;
+      margin-bottom: 0.5mm;
+    }
+
+    .edu-row strong, .job-head strong {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .sub { color: var(--muted); font-size: 7.1pt; font-weight: 300; }
+
+    .date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6.7pt;
+      color: var(--cyan-dim);
+      white-space: nowrap;
+    }
+
+    .job {
+      margin-bottom: 1.9mm;
+      padding: 1.8mm 2.2mm;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(46,197,255,0.12);
+      border-radius: 1px;
+    }
+
+    .job:last-child { margin-bottom: 0; }
+
+    .role-line {
+      font-size: 7pt;
+      color: var(--muted);
+      margin-bottom: 0.7mm;
+      font-weight: 300;
+    }
+
+    .role-line em {
+      font-style: normal;
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    ul { padding-left: 3mm; list-style: none; }
+
+    li {
+      position: relative;
+      font-size: 7.3pt;
+      line-height: 1.44;
+      margin-bottom: 0.45mm;
+      color: #1c2a3c;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: -2.8mm;
+      top: 0.55em;
+      width: 3px;
+      height: 3px;
+      background: var(--cyan);
+      box-shadow: 0 0 5px rgba(46,197,255,0.55);
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 1.2mm; }
+
+    .tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6.4pt;
+      padding: 1mm 2mm;
+      color: var(--navy);
+      background: rgba(46,197,255,0.08);
+      border: 1px solid rgba(46,197,255,0.28);
+    }
+
+    .works {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1mm 4mm;
+      font-size: 7.2pt;
+      color: #1c2a3c;
+    }
+
+    .works span {
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--cyan-dim);
+      font-size: 6.5pt;
+      margin-right: 1.4mm;
+    }
+
+    footer {
+      margin-top: 2mm;
+      padding-top: 1.8mm;
+      border-top: 1px solid rgba(46,197,255,0.2);
+      display: flex;
+      justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6pt;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .side-rail {
+      position: absolute;
+      right: 0;
+      top: 38mm;
+      bottom: 0;
+      width: 2.2mm;
+      background: linear-gradient(180deg, var(--cyan), transparent 70%);
+      opacity: 0.55;
+    }
+
+    @media screen {
+      body { padding: 24px 0 50px; }
+      .sheet { box-shadow: 0 28px 70px rgba(0,0,0,0.45); }
+    }
+
+    @media print {
+      html, body { background: white; }
+      .sheet { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="side-rail"></div>
+    <div class="hero">
+      <img class="hero-img" src="assets/tech-feed.png" alt="" />
+      <div class="hero-mask"></div>
+      <div class="hero-copy">
+        <p class="version-note">CONTENT STREAM · DISCOVERY ENGINE · MADANG TECH</p>
+        <h1 class="name">查如杭</h1>
+        <p class="intent">求职意向 · 小红书内容运营实习 <span>// 科技垂类 / 马当路练习生</span></p>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="meta-bar">
+        <div class="meta-item">
+          <div class="label">Profile</div>
+          <div class="value">23 岁 · 上海<span class="sub">2027 届硕士在读</span></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Contact</div>
+          <div class="value">190-1144-5164<span class="sub">3050932329@qq.com</span></div>
+        </div>
+        <div class="meta-item">
+          <div class="label">Portfolio</div>
+          <div class="value"><a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/?v=20260810">作品集链接</a><span class="sub">点击查看最新版</span></div>
+        </div>
+        <div class="meta-item wide">
+          <div class="label">Availability</div>
+          <div class="value">到岗 2026.08.17<span class="sub">持续 3–6 月 · 周 4–5 天 · 上海</span></div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div>
+          <p class="summary">
+            华东政法大学新闻与传播硕士在读。对科技 / 数码 / AI 工具有真实使用与判断：能说清「这条笔记为何有获得感、为何想转发」。具备小红书优质内容拆解与选题输出、AI 成片全链路与科技向活动落地经验；关注垂类趋势与创作者表达，习惯用内容判断 + 数据复盘说话。最早到岗 <strong>2026.08.17</strong>，可持续 <strong>3–6 个月</strong>，周 <strong>4–5 天</strong>（上海坐班）。
+          </p>
+
+          <section>
+            <h2 class="sec-title">Education</h2>
+            <div class="edu-grid">
+              <div>
+                <div class="edu-row">
+                  <strong>华东政法大学 · 新闻与传播硕士</strong>
+                  <span class="date">2025.06–2027.06</span>
+                </div>
+                <div class="sub">成绩排名前 30% · 数据新闻 / 新媒体运营分析 / 广告学</div>
+              </div>
+              <div>
+                <div class="edu-row">
+                  <strong>温州医科大学仁济学院 · 护理学本科</strong>
+                  <span class="date">2020.06–2024.06</span>
+                </div>
+                <div class="sub">成绩排名前 30% · 医学统计与场景沟通基础</div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="photo-wrap">
+          <img class="photo" src="photo.png" alt="查如杭" />
+          <div class="photo-cap">PROFILE</div>
+        </div>
+      </div>
+
+      <section>
+        <h2 class="sec-title">Experience</h2>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>众安保险 · 车险事业部内容运营</strong>
+            <span class="date">2026.04–2026.08</span>
+          </div>
+          <div class="role-line"><em>选题策划</em> · 内容品质把关 · 优质供给发现 · 分发效率复盘</div>
+          <ul>
+            <li><strong>选题与趋势：</strong>操盘「怎么用 AI」「AI 短剧」等科技效率向栏目，持续输出选题方向与内容洞察；沉淀「AI 主播+画中画」等可复用范式。</li>
+            <li><strong>内容审核与优质发现：</strong>独立负责 8+ 栏目、累计交付 30+ 条视频；把关可读性、合规表述与场景化表达，筛出高完成度成片模板。</li>
+            <li><strong>分发提效意识：</strong>搭建脚本→生成→成片 SOP；跟进直播投流与转化监控，按效果优化流量分配。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>上海新见科技有限公司 · 新媒体运营</strong>
+            <span class="date">2026.04–2026.07</span>
+          </div>
+          <div class="role-line">科技品牌合作 · <em>阿里云</em> · 跨团队落地 · 内容数据判断</div>
+          <ul>
+            <li>对接<strong>阿里云</strong>等科技合作方，完成商务—物料—现场闭环；参与「AI 投资开放麦」落地。</li>
+            <li>参与<strong>阿里云金融 MDF</strong>渠道招募：主题、议程、邀约分层与执行 SOP。</li>
+            <li>负责公众号与小红书直播协作，核心互动率提升 20%+，场均观看提升 35%+。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>上海浦东法院 · 宣传</strong>
+            <span class="date">2025.12–2026.02</span>
+          </div>
+          <ul>
+            <li>统筹年度春晚活动全流程；普法专栏改编为反诈系列短视频，并完成复盘。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>安徽省六安市残养中心 · 新媒体运营</strong>
+            <span class="date">2025.03–2025.08</span>
+          </div>
+          <ul>
+            <li>负责公众号 / 视频号科普内容策划与复盘，推文制作周期缩短约 50%。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Projects</h2>
+        <article class="job">
+          <div class="job-head">
+            <strong>小红书账号运营 · 优质内容判断 &amp; 选题洞察</strong>
+            <span class="date">2026.04–2026.07</span>
+          </div>
+          <div class="role-line">内容 sense · 爆款拆解 · SEO/AEO · 「为何想转发」</div>
+          <ul>
+            <li><strong>优质发现：</strong>拆解 20+ 竞品与爆款模型；粉丝 1.3w+（+200%），产出 10+ 条 3w+ 笔记。</li>
+            <li><strong>趋势与选题：</strong>用完播/互动/转化漏斗输出选题方向与 SEO/AEO 策略；沉淀选题清单与成片 SOP。</li>
+            <li><strong>内容创作：</strong>完整创作与发布经验；深度使用 Cursor / Claude / 即梦 / 可灵。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>即梦 · AI 短剧产品拆解</strong>
+            <span class="date">2026</span>
+          </div>
+          <div class="role-line">科技产品洞察 · 内容生产链路 · 另附拆解 PDF</div>
+          <ul>
+            <li>拆解跨镜一致性 / Prompt 成本 / 剪辑友好性；提出角色资产卡等方案与 A/B 验证指标。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>AI 漫剧行业观察 · 热点时间线</strong>
+            <span class="date">2026</span>
+          </div>
+          <div class="role-line">垂类趋势追踪 · 选题方向与内容洞察输出</div>
+          <ul>
+            <li>梳理 AI 漫剧热点与产品演进，沉淀可转化为站内选题/征稿方向的洞察。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Skills</h2>
+        <div class="tag-row">
+          <span class="tag">内容审核 · 优质发现</span>
+          <span class="tag">选题策划 · 趋势洞察</span>
+          <span class="tag">科技 / AI 工具判断</span>
+          <span class="tag">小红书数据复盘</span>
+          <span class="tag">Cursor / Claude</span>
+          <span class="tag">即梦 / 可灵 / Midjourney</span>
+          <span class="tag">剪映 / CapCut</span>
+          <span class="tag">Figma · 飞书</span>
+          <span class="tag">英语 CET-6</span>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Selected Works</h2>
+        <div class="works">
+          <div><span>01</span>即梦 AI 短剧产品拆解</div>
+          <div><span>02</span>AI 漫剧行业观察 · 热点时间线</div>
+          <div><span>03</span>众安「怎么用 AI」/ AI 短剧栏目</div>
+          <div><span>04</span>小红书爆款判断与选题复盘</div>
+          <div><span>05</span>阿里云 × AI 投资开放麦</div>
+          <div><span>06</span>科技垂类内容判断样例</div>
+        </div>
+      </section>
+
+      <footer>
+        <span>ZHA RUHANG · TECH VERTICAL RESUME</span>
+        <span>scan · rank · recommend</span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
