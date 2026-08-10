@@ -1,7 +1,7 @@
 # 查如杭 · 内容运营作品集
 
 **线上地址（任何人可打开）：**  
-https://zharuhang-blip.github.io/zhongan-content-portfolio/?v=20260810b
+https://zharuhang-blip.github.io/zhongan-content-portfolio/?v=20260810c
 
 仓库：https://github.com/zharuhang-blip/zhongan-content-portfolio
 
