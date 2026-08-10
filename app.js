@@ -140,6 +140,19 @@
       .join("")}</div>`;
   }
 
+  function linksMarkup(work) {
+    if (!work.links || !work.links.length) return "";
+    const items = work.links
+      .map(
+        (item) =>
+          `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.label || item.url}</a>${
+            item.note ? `<span class="link-note">${item.note}</span>` : ""
+          }</li>`
+      )
+      .join("");
+    return `<div class="detail-row detail-row--links"><span>相关链接</span><ul class="detail-links">${items}</ul></div>`;
+  }
+
   function detailMarkup(work) {
     const rows = [
       ["亮点", work.highlight],
@@ -153,7 +166,7 @@
         ([label, value]) =>
           `<div class="detail-row"><span>${label}</span><p>${value}</p></div>`
       )
-      .join("")}`;
+      .join("")}${linksMarkup(work)}`;
   }
 
   function episodesMarkup(work) {
