@@ -454,6 +454,7 @@ main,
   flex-wrap: wrap;
   gap: 0.5rem;
   max-width: 920px;
+  margin-top: 1.15rem;
 }
 
 .filter-btn {
@@ -706,6 +707,29 @@ main,
   font-size: 0.95rem;
   font-weight: 300;
   max-width: 40rem;
+}
+
+.work-problem-label {
+  display: inline-block;
+  margin-right: 0.45rem;
+  padding: 0.08rem 0.38rem;
+  border: 1px solid rgba(36, 80, 255, 0.28);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  vertical-align: 0.08em;
+}
+
+.works-lead {
+  margin: 0.65rem 0 0;
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 300;
 }
 
 .work-empty {
@@ -1034,6 +1058,11 @@ main,
   color: var(--muted);
   font-size: 0.94rem;
   font-weight: 300;
+}
+
+.detail-row--problem p {
+  color: var(--ink);
+  font-weight: 400;
 }
 
 .detail-links {

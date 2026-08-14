@@ -31,7 +31,7 @@
   }
 
   function categories() {
-    const buttons = ["全部", "众安车险", "个人作品"];
+    const buttons = ["全部", "栏目成片", "策划运营"];
     if (typeof CATEGORIES !== "undefined" && CATEGORIES.length) {
       return [...buttons, ...CATEGORIES];
     }
@@ -46,12 +46,12 @@
       .map((p) => {
         const isGroup = groupKeys.includes(p);
         const mark =
-          p === "众安车险" ? "ZA" : p === "个人作品" ? "ME" : "";
+          p === "栏目成片" ? "EP" : p === "策划运营" ? "OPS" : "";
         const label = isGroup
           ? `<span class="filter-group-mark" aria-hidden="true">${mark}</span><span>${p}</span>`
           : p;
         return `<button class="filter-btn${isGroup ? " filter-group" : ""}${
-          p === "个人作品" ? " filter-group-personal" : ""
+          p === "策划运营" ? " filter-group-personal" : ""
         }${p === activeFilter ? " active" : ""}" type="button" data-filter="${p}">${label}</button>`;
       })
       .join("");
@@ -87,20 +87,20 @@
 
     const zaSet =
       typeof CATEGORY_GROUPS !== "undefined"
-        ? new Set(CATEGORY_GROUPS["众安车险"] || [])
+        ? new Set(CATEGORY_GROUPS["栏目成片"] || [])
         : new Set();
     const personalSet =
       typeof CATEGORY_GROUPS !== "undefined"
-        ? new Set(CATEGORY_GROUPS["个人作品"] || [])
+        ? new Set(CATEGORY_GROUPS["策划运营"] || [])
         : new Set();
 
     let html = "";
     let lastGroup = "";
     items.forEach((work, index) => {
       const group = zaSet.has(work.category)
-        ? "众安车险栏目"
+        ? "栏目成片"
         : personalSet.has(work.category)
-          ? "个人作品"
+          ? "策划与运营"
           : "";
       if (activeFilter === "全部" && group && group !== lastGroup) {
         html += `<h3 class="works-group-title">${group}</h3>`;
@@ -123,7 +123,7 @@
               <span>${work.year || ""}</span>
             </div>
             <h3 class="work-title">${work.title}</h3>
-            <p class="work-desc">${work.desc || ""}</p>
+            <p class="work-desc"><span class="work-problem-label">问题</span>${work.problem || work.desc || ""}</p>
           </div>
         </article>`;
     });
@@ -155,16 +155,16 @@
 
   function detailMarkup(work) {
     const rows = [
-      ["亮点", work.highlight],
-      ["方法论", work.method],
-      ["产出物", work.outputs],
-      ["简历一句话", work.resumeLine],
+      ["发现的问题", work.problem],
+      ["怎么解决", work.solve],
+      ["路径", work.method],
+      ["结果", work.outputs],
     ].filter(([, v]) => v);
 
     return `${galleryMarkup(work)}${rows
       .map(
-        ([label, value]) =>
-          `<div class="detail-row"><span>${label}</span><p>${value}</p></div>`
+        ([label, value], i) =>
+          `<div class="detail-row${i === 0 ? " detail-row--problem" : ""}"><span>${label}</span><p>${value}</p></div>`
       )
       .join("")}${linksMarkup(work)}`;
   }
