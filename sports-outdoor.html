@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>查如杭 · 运动户外达人分层与货盘判断</title>
+  <meta name="description" content="小红书运动户外电商运营实习附件：达人分层、跑团观察、HYROX 趋势与可执行选题。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #12141a;
+      --muted: #5c6170;
+      --line: rgba(18, 20, 26, 0.12);
+      --blue: #2450ff;
+      --orange: #e8651a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: #ecece8;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--blue); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+    .sheet {
+      background: #fafaf8;
+      border: 1px solid var(--line);
+      padding: 28px 26px 22px;
+      box-shadow: 0 18px 50px rgba(18, 20, 26, 0.12);
+    }
+    .eyebrow {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: "Noto Serif SC", serif;
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .lead {
+      font-size: 14px;
+      color: #2a2e38;
+      padding: 12px 14px;
+      background: #fff;
+      border-left: 3px solid var(--blue);
+      margin-bottom: 16px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--ink);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta strong { color: var(--ink); }
+    h2 {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      margin: 22px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    p, li { font-size: 14px; color: #22252d; }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 720px) {
+      .cards { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 12px 13px;
+    }
+    .card h3 { font-size: 15px; margin-bottom: 4px; }
+    .card .tag {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      color: var(--orange);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card ul { list-style: none; }
+    .card li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      background: var(--blue);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: rgba(36, 80, 255, 0.08);
+      font-size: 12px;
+    }
+    .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fff;
+      border-left: 3px solid var(--orange);
+      font-size: 14px;
+    }
+    .topics {
+      display: grid;
+      gap: 10px;
+    }
+    .topic {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+    }
+    .topic h3 { font-size: 15px; margin-bottom: 6px; }
+    .topic p { font-size: 13px; margin-bottom: 4px; }
+    .topic p span {
+      color: var(--blue);
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    footer {
+      margin-top: 22px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <article class="sheet">
+      <p class="eyebrow">XHS SPORTS OUTDOOR · TREND TEARDOWN</p>
+      <h1>运动户外 · 达人分层与货盘判断</h1>
+      <p class="lead">
+        投递岗位：小红书 · 运动户外电商运营实习。这一页说明我怎么看站内运动户外内容：谁适合日常种草，谁适合讲品转化，HYROX 和城市跑团分别在卖什么。样本来自日常关注与公开信息，不是品牌合作物料。
+      </p>
+      <div class="meta">
+        <span>分析人：<strong>查如杭</strong></span>
+        <span>场景：<strong>上海跑步 / 女性粉丝跑团</strong></span>
+        <span>用途：<strong>内容运营判断附件</strong></span>
+      </div>
+
+      <h2>01 三种达人，不能用同一套 Brief</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="tag">生活感跑者 · 腰部种草</div>
+          <h3>你好竹子</h3>
+          <p style="font-size:12px;margin-bottom:8px;"><a href="https://www.xiaohongshu.com/user/profile/579f4aca82ec3967ddc9c7fa">小红书主页</a> · 可搜索「你好竹子」</p>
+          <ul>
+            <li>人设：上海、跑步进生活，不是训练日志</li>
+            <li>内容卖「我也可以这样跑」：跑 + 穿搭 + 日常</li>
+            <li>更适合：服饰、通勤跑鞋、女性向生活方式货盘</li>
+            <li>建联价值：日常种草、场景共创，实习生更可能接触的类型</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="tag">专业体验买手 · 头部转化</div>
+          <h3>姜思达</h3>
+          <p style="font-size:12px;margin-bottom:8px;"><a href="https://www.xiaohongshu.com/user/profile/5d510ba0000000001103bd0d">小红书主页</a> · 可搜索「姜思达」</p>
+          <ul>
+            <li>人设：公众人物 → 严肃跑者 / 越野 → 运动户外买手</li>
+            <li>内容卖真实使用：赛事、训练、装备深度</li>
+            <li>公开报道：2024.03 运动户外专场约 1200–1300 万 GMV，进房约 68 万，客单价约 900+</li>
+            <li>运营启示：观察样本，不是实习生建联对象</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="tag">素人 KOC · 高信任</div>
+          <h3>完赛者 / 跑团用户</h3>
+          <p style="font-size:12px;margin-bottom:8px;">上海美食博主组织的女性粉丝跑团 · 我实际参加</p>
+          <ul>
+            <li>人设：可被模仿的身边人，不是专业运动员</li>
+            <li>内容卖完赛证明、装备避坑、组队社交</li>
+            <li>更适合：首赛清单、入门跑鞋、可执行训练</li>
+            <li>转化常发生在「今天穿哪双、这条怎么配」</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">
+        <strong>判断：</strong>竹子这类适合日常种草和场景共创；姜思达这类适合讲品和专场转化；跑团 / 完赛素人适合做可信的入门供给。运动户外电商三边都要，Brief 不能共用。
+      </p>
+
+      <h2>02 我在跑团里实际看到什么</h2>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>观察点</th>
+              <th>现场发生什么</th>
+              <th>对内容 / 货盘的启示</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>组织形态</td>
+              <td>不定期、美食博主粉丝局，偏生活方式而不是配速训练营</td>
+              <td>用户先要「能加入、好看、好晒」，再谈专业表现</td>
+            </tr>
+            <tr>
+              <td>讨论高频</td>
+              <td>穿什么、拍什么、跑完去哪吃；装备口口相传</td>
+              <td>选题优先场景清单，而不是品牌广告语</td>
+            </tr>
+            <tr>
+              <td>内容出口</td>
+              <td>自然变成笔记：局前穿搭、路线、局后合影</td>
+              <td>KOC 供给稳定，适合持续种草而不是一次性大场</td>
+            </tr>
+            <tr>
+              <td>HYROX 热源</td>
+              <td>站内完赛 vlog、装备清单、组队身份感持续升温</td>
+              <td>可卖训练鞋、压缩衣、心率带、营养品、赛事周边；达人优先完赛者</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>03 三个可执行选题</h2>
+      <div class="topics">
+        <div class="topic">
+          <h3>01｜上海女性跑团入门装备</h3>
+          <p><span>形态</span>笔记 / 清单：出发前穿什么、包里带什么、拍哪三张。</p>
+          <p><span>达人</span>竹子型生活感跑者，或跑团素人 KOC。</p>
+          <p><span>货盘</span>通勤跑鞋、轻量外套、可晒的配件，而不是硬核越野包。</p>
+        </div>
+        <div class="topic">
+          <h3>02｜HYROX 首赛避坑</h3>
+          <p><span>形态</span>完赛者口播 + 站点清单：第一次参赛最容易买错什么。</p>
+          <p><span>达人</span>完赛素人 KOC 比纯口播健身教练更可信。</p>
+          <p><span>货盘</span>训练鞋、压缩衣、心率带、补剂；强调「能完赛」而不是专业成绩。</p>
+        </div>
+        <div class="topic">
+          <h3>03｜同一双鞋，两种讲法</h3>
+          <p><span>形态</span>对照内容：生活感通勤跑 vs 专业讲品。</p>
+          <p><span>达人</span>腰部生活博主做种草；买手 / 严肃跑者做参数和场景验证。</p>
+          <p><span>货盘</span>同一 SKU 分层投放，避免用姜思达的讲品稿去找竹子型达人。</p>
+        </div>
+      </div>
+
+      <p class="note">
+        若入职后做达人建联：我会先铺腰部生活感账号和完赛 KOC，用 Brief 控制场景和货盘；头部买手只作为趋势和讲品样本，不作为实习生日常建联名单。
+      </p>
+
+      <footer>
+        <span>查如杭 · Sports Outdoor Teardown · 2026.08</span>
+        <span>生活感种草 · 专业讲品 · 素人信任</span>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>

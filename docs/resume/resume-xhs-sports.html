@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>查如杭 · 小红书运动户外电商运营简历</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #12141a;
+      --muted: #5c6170;
+      --line: rgba(18, 20, 26, 0.12);
+      --blue: #2450ff;
+      --orange: #e8651a;
+      --bg: #f6f6f4;
+      --paper: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    html, body {
+      background: #d8d8d4;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background:
+        radial-gradient(520px 280px at 12% 0%, rgba(36, 80, 255, 0.1), transparent 60%),
+        radial-gradient(420px 260px at 100% 8%, rgba(232, 101, 26, 0.06), transparent 55%),
+        linear-gradient(180deg, #fafaf8 0%, #f4f4f2 100%);
+      padding: 10mm 12mm 9mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(18, 20, 26, 0.08) 1px, transparent 1.2px);
+      background-size: 14px 14px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr 22mm;
+      gap: 8mm;
+      align-items: start;
+      padding-bottom: 4mm;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 3.4mm;
+    }
+
+    .name {
+      font-family: "Noto Serif SC", "Songti SC", serif;
+      font-size: 28pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.05;
+    }
+
+    .intent {
+      margin-top: 2.2mm;
+      display: inline-flex;
+      align-items: center;
+      gap: 2mm;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 8pt;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    .intent::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+    }
+
+    .meta {
+      margin-top: 2.6mm;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2mm 4mm;
+      color: var(--muted);
+      font-size: 8.4pt;
+      line-height: 1.45;
+    }
+
+    .meta strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .photo {
+      width: 22mm;
+      height: 26mm;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: #eee;
+    }
+
+    .summary {
+      margin-bottom: 3.4mm;
+      padding: 2.6mm 3.2mm;
+      background: rgba(255, 255, 255, 0.72);
+      border-left: 3px solid var(--blue);
+      font-size: 8.2pt;
+      line-height: 1.52;
+      color: #2a2e38;
+    }
+
+    section { margin-bottom: 3.2mm; }
+
+    .sec-title {
+      display: flex;
+      align-items: baseline;
+      gap: 3mm;
+      margin-bottom: 2mm;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 8pt;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    .sec-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      transform: translateY(-1px);
+    }
+
+    .edu-row, .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4mm;
+      margin-bottom: 0.8mm;
+    }
+
+    .edu-row strong, .job-head strong {
+      font-size: 9.2pt;
+      font-weight: 700;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 8pt;
+    }
+
+    .date {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 7.6pt;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 6mm;
+    }
+
+    .job { margin-bottom: 2.4mm; }
+
+    .job:last-child { margin-bottom: 0; }
+
+    .role-line {
+      font-size: 8pt;
+      color: var(--muted);
+      margin-bottom: 1mm;
+    }
+
+    .role-line em {
+      font-style: normal;
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    ul {
+      padding-left: 3.6mm;
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      font-size: 8pt;
+      line-height: 1.48;
+      margin-bottom: 0.65mm;
+      color: #22252d;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: -3.2mm;
+      top: 0.55em;
+      width: 1.4mm;
+      height: 1.4mm;
+      background: var(--blue);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4mm;
+    }
+
+    .tag {
+      font-size: 7.4pt;
+      padding: 1mm 2.2mm;
+      border: 1px solid rgba(36, 80, 255, 0.28);
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--ink);
+    }
+
+    .works {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2mm 5mm;
+      font-size: 7.8pt;
+      line-height: 1.4;
+      color: #2a2e38;
+    }
+
+    .works span {
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--blue);
+      font-size: 7pt;
+      margin-right: 1.5mm;
+    }
+
+    footer {
+      margin-top: 1.6mm;
+      padding-top: 1.8mm;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 6.8pt;
+      color: var(--muted);
+    }
+
+    @media screen {
+      body { padding: 18px 0 40px; }
+      .sheet {
+        box-shadow: 0 18px 50px rgba(18, 20, 26, 0.18);
+      }
+    }
+
+    @media print {
+      html, body { background: white; }
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        width: 210mm;
+        min-height: 297mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="content">
+      <header>
+        <div>
+          <h1 class="name">查如杭</h1>
+          <div class="intent">求职意向 · 小红书运动户外电商运营实习</div>
+          <div class="meta">
+            <span>23 岁 · 上海 · 周 5 天坐班 · 实习 3 个月+</span>
+            <span><strong>190-1144-5164</strong></span>
+            <span><strong>3050932329@qq.com</strong></span>
+            <span>作品集：<a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/" style="color:#2450ff;font-weight:600;text-decoration:none;">https://zharuhang-blip.github.io/zhongan-content-portfolio/</a></span>
+            <span>拆解页：<a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html" style="color:#2450ff;font-weight:600;text-decoration:none;">https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html</a></span>
+          </div>
+        </div>
+        <img class="photo" src="photo.png" alt="查如杭" />
+      </header>
+
+      <p class="summary">
+        华东政法大学新闻与传播硕士在读（2027 届）。熟悉小红书种草与电商转化：协助账号完成 <strong>30+ 品牌合作</strong>、橱窗成交 <strong>300+</strong>；个人美食号获赞收藏 <strong>6.2 万+</strong>。能独立拆 Brief、跟内容、做效果复盘，并用 AI 整理完播 / 互动 / 转化漏斗。日常跑步，参与上海美食博主组织的<strong>女性粉丝跑团</strong>；持续关注运动户外品牌与 HYROX 等赛事在站内的内容与货盘变化。上海坐班周 5 天，可实习 3 个月以上。
+      </p>
+
+      <section>
+        <h2 class="sec-title">Education 教育经历</h2>
+        <div class="edu-grid">
+          <div>
+            <div class="edu-row">
+              <strong>华东政法大学 · 新闻与传播硕士</strong>
+              <span class="date">2025.06–2027.06</span>
+            </div>
+            <div class="sub">成绩排名前 30% · 数据新闻 / 新媒体运营分析 / 广告学</div>
+          </div>
+          <div>
+            <div class="edu-row">
+              <strong>温州医科大学仁济学院 · 护理学本科</strong>
+              <span class="date">2020.06–2024.06</span>
+            </div>
+            <div class="sub">成绩排名前 30% · 医学统计与场景沟通基础</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Experience 实习经历</h2>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>小红书 IP 打造 · 编导 &amp; 商务助理</strong>
+            <span class="date">2026.04–2026.07</span>
+          </div>
+          <div class="role-line">达人 / 品牌沟通 · 笔记种草 · <em>橱窗转化</em> · AI 数据复盘</div>
+          <ul>
+            <li><strong>达人与商务：</strong>协助筛选合作方向并对接品牌 <strong>30+</strong>；拆 Brief、写商单脚本、跟发布与效果复盘；打通广告 / 探店 / 橱窗 / 咨询，变现 1w+，橱窗成交 <strong>300+</strong>，私域转化约 60%。</li>
+            <li><strong>内容：</strong>拆解 20+ 竞品与爆款模型，优化 SEO / AEO；产出 10+ 条 3 万+ 笔记，粉丝 1.3w+（增长 200%）。</li>
+            <li><strong>数据 + AI：</strong>用 AI 复盘完播、点赞与转化漏斗，沉淀可复用选题与结构，再反推下一轮内容。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>众安保险 · 车险事业部内容运营</strong>
+            <span class="date">2026.04–2026.08</span>
+          </div>
+          <div class="role-line">人群标签选达人 · 小红书种草协同 · AI 内容与数据复盘</div>
+          <ul>
+            <li><strong>达人匹配：</strong>参与小程序瀑布流推荐标签设计（用户标签 30+ / 内容标签 11·86），按人群标签筛选 / 匹配达人，服务内容分发。</li>
+            <li><strong>种草协同：</strong>参与品牌战役小红书种草周期（团队口径：曝光约 <strong>58 万+</strong>、新增种草约 <strong>1.2 万</strong>），本人负责内容与人群策略执行。</li>
+            <li><strong>AI 复盘：</strong>用 AI 辅助脚本与数据整理，累计交付 30+ 条视频；跟进直播投流与转化，优化资源分配。</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <strong>上海新见科技有限公司 · 新媒体运营</strong>
+            <span class="date">2026.04–2026.07</span>
+          </div>
+          <div class="role-line">品牌对接 · 小红书直播协作 · 分品类时段复盘</div>
+          <ul>
+            <li>对接<strong>阿里云</strong>等合作方，跟进商务—物料—现场闭环；负责小红书直播协作，按品类与时段复盘，核心互动率提升 20%+，场均观看提升 35%+。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Projects 项目经历</h2>
+        <article class="job">
+          <div class="job-head">
+            <strong>小红书美食账号 · 个人运营</strong>
+            <span class="date">持续运营</span>
+          </div>
+          <div class="role-line">C 端种草实践 · 品牌共创 · <a href="https://xhslink.cn/m/4VUzsiPZ49E" style="color:#2450ff;text-decoration:none;">主页链接</a></div>
+          <ul>
+            <li>独立完成选题、拍摄与笔记生产；累计获赞与收藏 <strong>6.2 万+</strong>；完成<strong>叮咚买菜、盒马</strong>等内容合作（Brief → 种草表达 → 发布复盘）。</li>
+          </ul>
+        </article>
+        <article class="job">
+          <div class="job-head">
+            <strong>运动户外内容观察 · 跑团 / 赛事 / 达人分层</strong>
+            <span class="date">持续</span>
+          </div>
+          <div class="role-line">生活方式跑步用户 · HYROX 站内趋势 · <a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html" style="color:#2450ff;text-decoration:none;">拆解页（可点开）</a></div>
+          <ul>
+            <li>参与上海美食博主不定期组织的<strong>女性粉丝跑团</strong>，从生活方式场景观察跑步用户的装备讨论、晒图习惯与分享话术。</li>
+            <li>持续关注运动户外品牌与 HYROX 等赛事；拆解生活感跑者 / 专业买手 / 完赛 KOC 三类达人与货盘差异。完整判断见：<a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html" style="color:#2450ff;text-decoration:none;">https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html</a></li>
+          </ul>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Skills 技能工具</h2>
+        <div class="tag-row">
+          <span class="tag">小红书内容运营</span>
+          <span class="tag">KOL / KOC 沟通</span>
+          <span class="tag">种草 / 橱窗转化</span>
+          <span class="tag">趋势拆解与选题</span>
+          <span class="tag">AI 数据复盘</span>
+          <span class="tag">剪映 / CapCut</span>
+          <span class="tag">Excel / PPT</span>
+          <span class="tag">审美与内容质检</span>
+          <span class="tag">运动户外内容观察</span>
+          <span class="tag">Cursor / Claude</span>
+          <span class="tag">英语 CET-6</span>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="sec-title">Selected Works 作品精选</h2>
+        <div class="works">
+          <div><span>01</span>小红书 IP · 30+ 品牌合作 / 橱窗成交 300+</div>
+          <div><span>02</span>个人美食号种草（叮咚 / 盒马 · 6.2 万赞藏）</div>
+          <div><span>03</span>众安小红书种草战役协同（团队口径）</div>
+          <div><span>04</span>人群标签选达人 + 直播数据复盘</div>
+          <div><span>05</span>女性粉丝跑团 · 生活方式跑步观察</div>
+          <div><span>06</span><a href="https://zharuhang-blip.github.io/zhongan-content-portfolio/sports-outdoor.html" style="color:inherit;font-weight:600;text-decoration:none;">运动户外达人分层拆解（可点开）</a></div>
+        </div>
+      </section>
+
+      <footer>
+        <span>查如杭 · XHS Sports Outdoor E-comm Resume · 2026</span>
+        <span>上海坐班 · 周 5 天 · 可实习 3 个月+</span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
