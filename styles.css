@@ -908,12 +908,54 @@ main,
   -webkit-backdrop-filter: blur(20px);
 }
 
+.player-media {
+  position: relative;
+  background: #0d0d0d;
+}
+
 .player-frame video {
   width: 100%;
   max-height: min(56vh, 520px);
   aspect-ratio: 16 / 9;
   object-fit: contain;
   background: #0d0d0d;
+  display: block;
+}
+
+.player-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: rgba(8, 10, 16, 0.72);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.player-loading[hidden] {
+  display: none;
+}
+
+.player-loading__spin {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: player-spin 0.7s linear infinite;
+}
+
+@keyframes player-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .player-media[hidden] {

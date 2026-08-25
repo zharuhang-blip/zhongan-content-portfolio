@@ -12,3 +12,6 @@ docs/*.docx
 # Optional local-only scratch
 *.log
 .github/workflows/
+
+# Original uncompressed videos (keep local; do not publish)
+videos/_raw/

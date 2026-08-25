@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=40" />
+  <link rel="stylesheet" href="styles.css?v=41" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -189,7 +189,11 @@
     <button class="player-close" id="player-close" aria-label="关闭">×</button>
     <div class="player-frame">
       <div class="player-media" id="player-media">
-        <video id="player-video" controls playsinline></video>
+        <div class="player-loading" id="player-loading" hidden>
+          <span class="player-loading__spin" aria-hidden="true"></span>
+          <span>视频加载中…</span>
+        </div>
+        <video id="player-video" controls playsinline preload="none"></video>
       </div>
       <div class="player-meta">
         <h3 id="player-title"></h3>
@@ -199,7 +203,7 @@
     </div>
   </div>
 
-  <script src="works.js?v=40"></script>
-  <script src="app.js?v=40"></script>
+  <script src="works.js?v=41"></script>
+  <script src="app.js?v=41"></script>
 </body>
 </html>

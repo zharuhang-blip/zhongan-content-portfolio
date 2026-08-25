@@ -4,6 +4,7 @@
   const player = document.getElementById("player");
   const playerMedia = document.getElementById("player-media");
   const playerVideo = document.getElementById("player-video");
+  const playerLoading = document.getElementById("player-loading");
   const playerTitle = document.getElementById("player-title");
   const playerInfo = document.getElementById("player-info");
   const playerDetail = document.getElementById("player-detail");
@@ -180,12 +181,19 @@
       .join("")}</div>`;
   }
 
+  function setPlayerLoading(on) {
+    if (!playerLoading) return;
+    playerLoading.hidden = !on;
+  }
+
   function playEpisode(work, index) {
     const eps = workEpisodes(work);
     const ep = eps[index];
     if (!ep || !ep.video) {
+      setPlayerLoading(false);
       playerVideo.pause();
       playerVideo.removeAttribute("src");
+      playerVideo.removeAttribute("poster");
       playerVideo.load();
       playerMedia.hidden = true;
       return;
@@ -193,8 +201,36 @@
     activeEpisodeIndex = index;
     playerMedia.hidden = false;
     playerVideo.hidden = false;
+    const poster = ep.cover || work.cover || "";
+    if (poster) playerVideo.poster = poster;
+    else playerVideo.removeAttribute("poster");
+    setPlayerLoading(true);
+    playerVideo.preload = "metadata";
     playerVideo.src = ep.video;
-    playerVideo.play().catch(() => {});
+    playerVideo.load();
+    let started = false;
+    const tryPlay = () => {
+      if (started) return;
+      started = true;
+      setPlayerLoading(false);
+      playerVideo.play().catch(() => {});
+    };
+    playerVideo.addEventListener("canplay", tryPlay, { once: true });
+    playerVideo.addEventListener(
+      "error",
+      () => {
+        started = true;
+        setPlayerLoading(false);
+      },
+      { once: true }
+    );
+    const onProgress = () => {
+      if (playerVideo.readyState >= 3) {
+        playerVideo.removeEventListener("progress", onProgress);
+        tryPlay();
+      }
+    };
+    playerVideo.addEventListener("progress", onProgress);
     playerTitle.textContent =
       eps.length > 1 ? `${work.title.replace(/ · 合集$/, "")} · ${ep.title}` : work.title;
     const list = playerDetail.querySelector(".episode-list");
@@ -266,8 +302,10 @@
     activeEpisodeIndex = 0;
     player.hidden = true;
     player.classList.remove("player--deck");
+    setPlayerLoading(false);
     playerVideo.pause();
     playerVideo.removeAttribute("src");
+    playerVideo.removeAttribute("poster");
     playerVideo.load();
     playerVideo.hidden = false;
     clearPlayerHero();
