@@ -25,6 +25,7 @@ compress_one() {
 }
 
 # Vertical shorts / campaign: 720p-ish quality for web
+compress_one "videos/_raw/durex-air-film.mp4" "videos/manlun-durex/air-film.mp4" 960 28 1400k 2800k
 compress_one "videos/ai-drama/ep01.mp4" "videos/ai-drama/ep01.web.mp4" 960 28 1600k 3200k
 compress_one "videos/oder/campaign.mp4" "videos/oder/campaign.web.mp4" 720 28 1400k 2800k
 compress_one "videos/理赔案例/上海淹水理赔案例.mp4" "videos/理赔案例/上海淹水理赔案例.web.mp4" 960 28 1600k 3200k

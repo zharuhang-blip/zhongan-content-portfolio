@@ -32,12 +32,21 @@
   }
 
   function categories() {
-    const buttons = ["全部", "栏目成片", "策划运营"];
+    const groupKeys =
+      typeof CATEGORY_GROUPS !== "undefined" ? Object.keys(CATEGORY_GROUPS) : [];
+    const buttons = ["全部", ...groupKeys];
     if (typeof CATEGORIES !== "undefined" && CATEGORIES.length) {
       return [...buttons, ...CATEGORIES];
     }
     const set = new Set(WORKS.map((w) => w.category || w.platform).filter(Boolean));
     return [...buttons, ...set];
+  }
+
+  function groupMark(p) {
+    if (p === "品牌投放") return "AD";
+    if (p === "栏目成片") return "EP";
+    if (p === "策划运营") return "OPS";
+    return "";
   }
 
   function renderFilters() {
@@ -46,8 +55,7 @@
     filtersEl.innerHTML = categories()
       .map((p) => {
         const isGroup = groupKeys.includes(p);
-        const mark =
-          p === "栏目成片" ? "EP" : p === "策划运营" ? "OPS" : "";
+        const mark = groupMark(p);
         const label = isGroup
           ? `<span class="filter-group-mark" aria-hidden="true">${mark}</span><span>${p}</span>`
           : p;
@@ -86,23 +94,31 @@
       return;
     }
 
-    const zaSet =
-      typeof CATEGORY_GROUPS !== "undefined"
-        ? new Set(CATEGORY_GROUPS["栏目成片"] || [])
-        : new Set();
-    const personalSet =
-      typeof CATEGORY_GROUPS !== "undefined"
-        ? new Set(CATEGORY_GROUPS["策划运营"] || [])
-        : new Set();
+    const groupLookup = [];
+    if (typeof CATEGORY_GROUPS !== "undefined") {
+      Object.keys(CATEGORY_GROUPS).forEach((key) => {
+        const title =
+          typeof GROUP_TITLES !== "undefined" && GROUP_TITLES[key]
+            ? GROUP_TITLES[key]
+            : key;
+        groupLookup.push({
+          title,
+          set: new Set(CATEGORY_GROUPS[key] || []),
+        });
+      });
+    }
+
+    function workGroupTitle(work) {
+      for (const g of groupLookup) {
+        if (g.set.has(work.category)) return g.title;
+      }
+      return "";
+    }
 
     let html = "";
     let lastGroup = "";
     items.forEach((work, index) => {
-      const group = zaSet.has(work.category)
-        ? "栏目成片"
-        : personalSet.has(work.category)
-          ? "策划与运营"
-          : "";
+      const group = workGroupTitle(work);
       if (activeFilter === "全部" && group && group !== lastGroup) {
         html += `<h3 class="works-group-title">${group}</h3>`;
         lastGroup = group;
