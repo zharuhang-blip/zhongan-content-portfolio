@@ -11,10 +11,11 @@
   --cobalt: #1f4bff;
   --orange: #e8651a;
   --olive: #8a8f3d;
-  --font-display: "Syne", "Noto Sans SC", sans-serif;
-  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
-  --font-body: "Noto Sans SC", "Syne", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* System stack: no Google Fonts round-trip (slow / blocked in CN) */
+  --font-display: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-serif: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --radius: 0;
   --blur: 18px;

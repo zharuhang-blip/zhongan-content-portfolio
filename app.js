@@ -75,11 +75,26 @@
     return WORKS.filter((w) => (w.category || w.platform) === activeFilter);
   }
 
+  function listCoverSrc(cover) {
+    if (!cover || typeof cover !== "string") return cover;
+    // Prefer small thumbs for the grid; full cover still used in the player.
+    if (cover.startsWith("covers/") && cover.endsWith(".jpg") && !cover.includes("/thumbs/")) {
+      return cover.replace("covers/", "covers/thumbs/");
+    }
+    return cover;
+  }
+
   function mediaMarkup(work, index) {
     const playable = hasPlayable(work);
-    const eager = index < 4;
-    const cover = work.cover
-      ? `<img src="${work.cover}" alt="${work.title} 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} width="640" height="800" />`
+    const eager = index < 3;
+    const full = work.cover || "";
+    const src = listCoverSrc(full);
+    const fallback =
+      src !== full
+        ? ` onerror="this.onerror=null;this.src='${full}'"`
+        : "";
+    const cover = full
+      ? `<img src="${src}" alt="${work.title} 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""}${fallback} width="360" height="450" />`
       : "";
     const badge =
       work.episodes && work.episodes.length > 1
@@ -127,7 +142,7 @@
       const accent = accents[index % accents.length];
       const num = String(index + 1).padStart(2, "0");
       html += `
-        <article class="work-item" data-id="${work.id}" data-accent="${accent}" style="animation-delay: ${index * 60}ms" tabindex="0" role="button" aria-label="查看 ${work.title}">
+        <article class="work-item" data-id="${work.id}" data-accent="${accent}" style="animation-delay: ${Math.min(index, 8) * 40}ms" tabindex="0" role="button" aria-label="查看 ${work.title}">
           <div class="work-media">
             ${mediaMarkup(work, index)}
           </div>
