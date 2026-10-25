@@ -58,8 +58,11 @@ const GROUP_TITLES = {
   研究洞察: "内容策略与研究洞察",
 };
 
-/** 首页精选项目 id（按展示顺序） */
-const FEATURED_IDS = ["durex-air-01", "aidrama-01", "oder-01", "xhs-ip-01"];
+/**
+ * 首页精选：1 大 + 2 中。
+ * featuredHero / featuredLabel / featuredFlow / featuredSub 用于精选卡展示文案。
+ */
+const FEATURED_IDS = ["durex-air-01", "oder-01", "xhs-ip-01"];
 
 const WORKS = [
 {
@@ -69,6 +72,10 @@ const WORKS = [
     typeLabel: "品牌商业项目",
     tag: "信息流投放",
     featured: true,
+    featuredHero: true,
+    featuredLabel: "FEATURED 01 / BRAND & PERFORMANCE",
+    featuredTitle: "杜蕾斯 AiR · 商业内容与投放创意",
+    featuredFlow: "品牌卖点 → 内容钩子 → 商业投放 → 数据复盘",
     background: "曼伦 × 杜蕾斯 AiR · 抖音信息流投放场景；目标人群对「超薄」利益点感知弱，素材需在 3 秒内完成卖点沟通。",
     insight: "情绪记忆优于参数罗列：把超薄体感嫁接经典影视桥段与人格化表达，让用户先记住「感觉」，再理解卖点。",
     reflection: "信息流素材验证：冲突开场 + 产品利益点可视化，比硬讲参数更能拉动消耗；后续可沉淀「卖点→桥段库→投放验证」复用模板。",
@@ -238,7 +245,6 @@ const WORKS = [
     group: "AI创意",
     typeLabel: "原创内容项目",
     tag: "AI短剧",
-    featured: true,
     background: "红果向 AI 短剧赛道；低成本同质化严重，选题易跟风翻车、难过风控。",
     insight: "用 DataEye 趋势卡住种田逆袭赛道，开篇 3 秒冲突 + 付费钩子，把「可过审 + 可商业」写进选题阶段。",
     reflection: "AI 短剧竞争力在剧本与钩子，不在堆产能；趋势洞察 → 爽点地图 → 分镜指令应一体交付。",
@@ -395,6 +401,9 @@ const WORKS = [
     typeLabel: "AI视觉作品",
     tag: "AI视觉",
     featured: true,
+    featuredTitle: "AI视觉与创意 Campaign",
+    featuredSub: "创意制作 · 工作流",
+    coverFeatured: "assets/oder/campaign-01.jpg",
     background: "ODER STUDIO 夏日时尚视觉 · Lovart；AI 出图人设飘、不成系列，难筛出可投放组。",
     insight: "先锁模特设定卡与薄荷绿调性，再分场景出图 + 感知哈希去重，把批量生成收成 Campaign 成组资产。",
     reflection: "AI 视觉的关键不是多出图，而是一致性管控与筛选标准；设定卡是规模化生产的前提。",
@@ -581,6 +590,8 @@ const WORKS = [
     typeLabel: "真实账号运营",
     tag: "新媒体运营",
     featured: true,
+    featuredTitle: "小红书IP增长运营",
+    featuredSub: "内容策略 · 商业化",
     background: "小红书 IP「灵均Kikky」编导与商务助理（2026.04–07）；干货号有阅读、难转化。",
     insight: "拆竞品打爆款模型，用完播/转化漏斗复盘，把商单脚本接到公转私，形成广告/橱窗/咨询闭环。",
     reflection: "增长运营要同时管内容模型与变现链路；复盘方法论比单条爆款更能迁移到下一账号。",

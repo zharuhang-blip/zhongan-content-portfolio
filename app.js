@@ -297,28 +297,48 @@
         </article>`;
   }
 
+  function featuredCoverSrc(work) {
+    return work.coverFeatured || work.cover || "";
+  }
+
+  function featuredMediaMarkup(work, index, hero) {
+    const full = featuredCoverSrc(work);
+    if (!full) return "";
+    const thumb = thumbPath(full);
+    const preview = thumb || full;
+    const eager = index < 3;
+    return `<img class="work-cover${thumb ? " is-thumb" : ""}" src="${assetUrl(preview)}" data-full="${full}" data-local="${full}" alt="${
+      work.featuredTitle || work.title
+    } 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${
+      eager ? ' fetchpriority="high"' : ""
+    } width="${hero ? 1200 : 640}" height="${hero ? 675 : 800}" />`;
+  }
+
   function featuredCardHtml(work, index) {
     const accent = accents[index % accents.length];
-    const typeLabel = work.typeLabel || work.category || "";
-    const metric =
-      work.stats && work.stats[1]
-        ? `${work.stats[1].label} ${work.stats[1].value}`
-        : work.year || "";
-    return `<article class="featured-card" data-id="${work.id}" data-accent="${accent}" tabindex="0" role="button" aria-label="查看 ${work.title}">
-      <div class="featured-media">${mediaMarkup(work, index)}</div>
+    const isHero = Boolean(work.featuredHero) || index === 0;
+    const title = work.featuredTitle || work.title;
+    const label =
+      work.featuredLabel ||
+      (isHero
+        ? "FEATURED 01 / BRAND & PERFORMANCE"
+        : `${work.category || ""} · ${work.typeLabel || ""}`);
+    const sub = work.featuredFlow || work.featuredSub || work.typeLabel || work.category || "";
+    return `<article class="featured-card${isHero ? " featured-card--hero" : " featured-card--mid"}" data-id="${
+      work.id
+    }" data-accent="${accent}" tabindex="0" role="button" aria-label="查看 ${title}">
+      <div class="featured-media">${featuredMediaMarkup(work, index, isHero)}</div>
       <div class="featured-body">
-        <p class="featured-meta"><span>${work.category || ""}</span><span>${typeLabel}</span></p>
-        <h3 class="featured-title">${work.title}</h3>
-        <p class="featured-desc">${work.problem || work.desc || ""}</p>
-        <p class="featured-result">${metric}</p>
-        <span class="featured-link">查看 Case Study →</span>
+        <p class="featured-meta">${label}</p>
+        <h3 class="featured-title">${title}</h3>
+        <p class="featured-sub">${sub}</p>
       </div>
     </article>`;
   }
 
   function renderFeatured() {
     if (!featuredEl) return;
-    const items = featuredWorks();
+    const items = featuredWorks().slice(0, 3);
     if (!items.length) {
       featuredEl.innerHTML = "";
       return;
