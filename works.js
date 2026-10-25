@@ -62,7 +62,7 @@ const WORKS = [
     outputs: "《杜蕾斯 AiR · 经典影视信息流》成片（可播）",
     resumeLine:
       "曼伦实习期间完成杜蕾斯 AiR 抖音信息流成片：将超薄卖点与经典影视桥段结合，单条素材消耗约 20 万。",
-    year: "2025",
+    year: "2026",
     stats: [
       { label: "能力", value: "卖点→投放" },
       { label: "消耗", value: "约 20 万" },
