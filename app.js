@@ -17,7 +17,131 @@
   let activeFilter = "全部";
   let activeWork = null;
   let activeEpisodeIndex = 0;
+  let visibleCount = 0;
+  const PAGE_SIZE = 8;
   const accents = ["blue", "orange", "blue", "orange"];
+
+  // Delivery speed only — same original files, no re-encode.
+  // jsDelivr mirrors the GitHub repo and is usually faster than raw github.io in CN.
+  const REPO = "zharuhang-blip/zhongan-content-portfolio";
+  const USE_CDN = /\.github\.io$/i.test(location.hostname);
+  const CDN_BASE = `https://cdn.jsdelivr.net/gh/${REPO}@main/`;
+
+  function encodePath(path) {
+    return String(path)
+      .replace(/^\.\//, "")
+      .split("/")
+      .map((seg) => encodeURIComponent(seg))
+      .join("/");
+  }
+
+  function assetUrl(path) {
+    if (!path) return path;
+    if (/^(https?:|data:|blob:)/i.test(path)) return path;
+    const clean = path.replace(/^\.\//, "");
+    if (!USE_CDN) return clean;
+    return CDN_BASE + encodePath(clean);
+  }
+
+  function localUrl(path) {
+    if (!path) return path;
+    if (/^(https?:|data:|blob:)/i.test(path)) return path;
+    return path.replace(/^\.\//, "");
+  }
+
+  function thumbPath(cover) {
+    if (!cover || typeof cover !== "string") return "";
+    if (cover.startsWith("covers/") && cover.endsWith(".jpg") && !cover.includes("/thumbs/")) {
+      return cover.replace("covers/", "covers/thumbs/");
+    }
+    return "";
+  }
+
+  /** Limit parallel full-res upgrades so the connection stays responsive. */
+  const upgradeQueue = [];
+  let upgradeActive = 0;
+  const UPGRADE_MAX = 3;
+
+  function pumpUpgrade() {
+    while (upgradeActive < UPGRADE_MAX && upgradeQueue.length) {
+      const job = upgradeQueue.shift();
+      upgradeActive += 1;
+      job().finally(() => {
+        upgradeActive -= 1;
+        pumpUpgrade();
+      });
+    }
+  }
+
+  function enqueueUpgrade(fn) {
+    upgradeQueue.push(fn);
+    pumpUpgrade();
+  }
+
+  function bindMediaFallback(el, localPath) {
+    if (!el || !localPath || !USE_CDN) return;
+    el.addEventListener(
+      "error",
+      () => {
+        const fallback = localUrl(localPath);
+        if (el.src && !el.src.endsWith(fallback) && el.getAttribute("src") !== fallback) {
+          if (el.tagName === "VIDEO") {
+            el.src = fallback;
+            el.load();
+          } else {
+            el.src = fallback;
+          }
+        }
+      },
+      { once: true }
+    );
+  }
+
+  function upgradeCover(img) {
+    const full = img.getAttribute("data-full");
+    if (!full || img.dataset.upgraded === "1") return;
+    img.dataset.upgraded = "1";
+    enqueueUpgrade(
+      () =>
+        new Promise((resolve) => {
+          const probe = new Image();
+          probe.decoding = "async";
+          probe.onload = () => {
+            img.src = probe.src;
+            img.classList.remove("is-thumb");
+            img.classList.add("is-full");
+            resolve();
+          };
+          probe.onerror = () => {
+            const local = img.getAttribute("data-local");
+            if (local) img.src = localUrl(local);
+            img.classList.remove("is-thumb");
+            resolve();
+          };
+          probe.src = assetUrl(full);
+        })
+    );
+  }
+
+  function observeCovers(root) {
+    const imgs = root.querySelectorAll("img[data-full]");
+    if (!imgs.length) return;
+    if (!("IntersectionObserver" in window)) {
+      imgs.forEach((img) => upgradeCover(img));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          io.unobserve(entry.target);
+          upgradeCover(entry.target);
+        });
+      },
+      { rootMargin: "200px 0px", threshold: 0.01 }
+    );
+    imgs.forEach((img) => io.observe(img));
+  }
 
   function workEpisodes(work) {
     if (work.episodes && work.episodes.length) return work.episodes;
@@ -75,26 +199,15 @@
     return WORKS.filter((w) => (w.category || w.platform) === activeFilter);
   }
 
-  function listCoverSrc(cover) {
-    if (!cover || typeof cover !== "string") return cover;
-    // Prefer small thumbs for the grid; full cover still used in the player.
-    if (cover.startsWith("covers/") && cover.endsWith(".jpg") && !cover.includes("/thumbs/")) {
-      return cover.replace("covers/", "covers/thumbs/");
-    }
-    return cover;
-  }
-
   function mediaMarkup(work, index) {
     const playable = hasPlayable(work);
     const eager = index < 3;
     const full = work.cover || "";
-    const src = listCoverSrc(full);
-    const fallback =
-      src !== full
-        ? ` onerror="this.onerror=null;this.src='${full}'"`
-        : "";
+    const thumb = thumbPath(full);
+    // Instant paint with tiny placeholder, then swap to full-quality original.
+    const preview = thumb || full;
     const cover = full
-      ? `<img src="${src}" alt="${work.title} 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""}${fallback} width="360" height="450" />`
+      ? `<img class="work-cover${thumb ? " is-thumb" : ""}" src="${assetUrl(preview)}" data-full="${full}" data-local="${full}" alt="${work.title} 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} width="360" height="450" />`
       : "";
     const badge =
       work.episodes && work.episodes.length > 1
@@ -103,13 +216,14 @@
     return `${cover}${badge}<div class="work-play"><span>${playable ? "▶" : "详"}</span></div>`;
   }
 
-  function renderWorks() {
-    const items = visibleWorks();
-    if (!items.length) {
-      listEl.innerHTML = `<p class="work-empty">这个分类下还没有作品，去 works.js 里加一条吧。</p>`;
-      return;
+  function workGroupTitleFor(work, groupLookup) {
+    for (const g of groupLookup) {
+      if (g.set.has(work.category)) return g.title;
     }
+    return "";
+  }
 
+  function buildGroupLookup() {
     const groupLookup = [];
     if (typeof CATEGORY_GROUPS !== "undefined") {
       Object.keys(CATEGORY_GROUPS).forEach((key) => {
@@ -123,25 +237,19 @@
         });
       });
     }
+    return groupLookup;
+  }
 
-    function workGroupTitle(work) {
-      for (const g of groupLookup) {
-        if (g.set.has(work.category)) return g.title;
-      }
-      return "";
+  function workCardHtml(work, index, groupLookup, lastGroupRef) {
+    const group = workGroupTitleFor(work, groupLookup);
+    let prefix = "";
+    if (activeFilter === "全部" && group && group !== lastGroupRef.value) {
+      prefix = `<h3 class="works-group-title">${group}</h3>`;
+      lastGroupRef.value = group;
     }
-
-    let html = "";
-    let lastGroup = "";
-    items.forEach((work, index) => {
-      const group = workGroupTitle(work);
-      if (activeFilter === "全部" && group && group !== lastGroup) {
-        html += `<h3 class="works-group-title">${group}</h3>`;
-        lastGroup = group;
-      }
-      const accent = accents[index % accents.length];
-      const num = String(index + 1).padStart(2, "0");
-      html += `
+    const accent = accents[index % accents.length];
+    const num = String(index + 1).padStart(2, "0");
+    return `${prefix}
         <article class="work-item" data-id="${work.id}" data-accent="${accent}" style="animation-delay: ${Math.min(index, 8) * 40}ms" tabindex="0" role="button" aria-label="查看 ${work.title}">
           <div class="work-media">
             ${mediaMarkup(work, index)}
@@ -159,17 +267,47 @@
             <p class="work-desc"><span class="work-problem-label">问题</span>${work.problem || work.desc || ""}</p>
           </div>
         </article>`;
-    });
+  }
+
+  function renderWorks(reset) {
+    const items = visibleWorks();
+    if (reset !== false) visibleCount = Math.min(PAGE_SIZE, items.length);
+
+    if (!items.length) {
+      listEl.innerHTML = `<p class="work-empty">这个分类下还没有作品，去 works.js 里加一条吧。</p>`;
+      return;
+    }
+
+    const groupLookup = buildGroupLookup();
+    const lastGroupRef = { value: "" };
+    const slice = items.slice(0, visibleCount);
+    let html = slice
+      .map((work, index) => workCardHtml(work, index, groupLookup, lastGroupRef))
+      .join("");
+
+    if (visibleCount < items.length) {
+      html += `<button class="works-more" type="button" id="works-more">加载更多作品（还剩 ${items.length - visibleCount}）</button>`;
+    }
+
     listEl.innerHTML = html;
+    observeCovers(listEl);
+
+    const more = document.getElementById("works-more");
+    if (more) {
+      more.addEventListener("click", () => {
+        visibleCount = Math.min(visibleCount + PAGE_SIZE, items.length);
+        renderWorks(false);
+      });
+    }
   }
 
   function galleryMarkup(work) {
     if (!work.gallery || !work.gallery.length) return "";
     return `<div class="detail-gallery${work.gallery.length > 4 ? " detail-gallery--wide" : ""}">${work.gallery
-      .map(
-        (src, i) =>
-          `<figure class="detail-shot${i === 0 ? " detail-shot--hero" : ""}"><img src="${src}" alt="${work.title} 样例 ${i + 1}" loading="${i < 2 ? "eager" : "lazy"}" /></figure>`
-      )
+      .map((src, i) => {
+        const url = assetUrl(src);
+        return `<figure class="detail-shot${i === 0 ? " detail-shot--hero" : ""}"><img src="${url}" data-local="${src}" alt="${work.title} 样例 ${i + 1}" loading="${i < 2 ? "eager" : "lazy"}" decoding="async" /></figure>`;
+      })
       .join("")}</div>`;
   }
 
@@ -234,11 +372,13 @@
     playerMedia.hidden = false;
     playerVideo.hidden = false;
     const poster = ep.cover || work.cover || "";
-    if (poster) playerVideo.poster = poster;
+    if (poster) playerVideo.poster = assetUrl(poster);
     else playerVideo.removeAttribute("poster");
     setPlayerLoading(true);
     playerVideo.preload = "metadata";
-    playerVideo.src = ep.video;
+    // Stream original file via CDN when available; browser uses HTTP range.
+    playerVideo.src = assetUrl(ep.video);
+    bindMediaFallback(playerVideo, ep.video);
     playerVideo.load();
     let started = false;
     const tryPlay = () => {
@@ -251,8 +391,13 @@
     playerVideo.addEventListener(
       "error",
       () => {
-        started = true;
-        setPlayerLoading(false);
+        // bindMediaFallback may swap to origin; give it a beat, then clear spinner.
+        setTimeout(() => {
+          if (playerVideo.readyState < 2) {
+            started = true;
+            setPlayerLoading(false);
+          }
+        }, 400);
       },
       { once: true }
     );
@@ -288,8 +433,9 @@
     clearPlayerHero();
     const img = document.createElement("img");
     img.className = "player-hero-img";
-    img.src = src;
+    img.src = assetUrl(src);
     img.alt = alt || "";
+    bindMediaFallback(img, src);
     playerMedia.appendChild(img);
     playerMedia.hidden = false;
   }
@@ -305,6 +451,9 @@
       .filter(Boolean)
       .join(" · ");
     playerDetail.innerHTML = `${episodesMarkup(work)}${detailMarkup(work)}`;
+    playerDetail.querySelectorAll("img[data-local]").forEach((img) => {
+      bindMediaFallback(img, img.getAttribute("data-local"));
+    });
     document.body.style.overflow = "hidden";
 
     const eps = workEpisodes(work);
@@ -350,7 +499,7 @@
     if (!btn) return;
     activeFilter = btn.dataset.filter;
     renderFilters();
-    renderWorks();
+    renderWorks(true);
   });
 
   listEl.addEventListener("click", (e) => {
@@ -582,12 +731,18 @@
   }
 
   renderFilters();
-  renderWorks();
+  renderWorks(true);
 
   const startHero = () => initHeroField();
   if ("requestIdleCallback" in window) {
     requestIdleCallback(startHero, { timeout: 1200 });
   } else {
     setTimeout(startHero, 200);
+  }
+
+  if ("serviceWorker" in navigator && (USE_CDN || location.protocol === "https:")) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    });
   }
 })();
