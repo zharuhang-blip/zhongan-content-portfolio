@@ -1,6 +1,6 @@
 /* Portfolio offline / return-visit cache — full-quality assets, no re-encode. */
-const CACHE = "portfolio-media-v45";
-const PRECACHE = ["./", "index.html", "styles.css?v=45", "works.js?v=45", "app.js?v=45"];
+const CACHE = "portfolio-media-v46";
+const PRECACHE = ["./", "index.html", "styles.css?v=46", "works.js?v=46", "app.js?v=46"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

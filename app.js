@@ -1,6 +1,8 @@
 (function () {
   const listEl = document.getElementById("works-list");
   const filtersEl = document.getElementById("filters");
+  const filterHintEl = document.getElementById("filter-hint");
+  const featuredEl = document.getElementById("featured-list");
   const player = document.getElementById("player");
   const playerMedia = document.getElementById("player-media");
   const playerVideo = document.getElementById("player-video");
@@ -14,12 +16,17 @@
 
   yearEl.textContent = String(new Date().getFullYear());
 
-  let activeFilter = "全部";
+  let activeFilter = "全部作品";
   let activeWork = null;
   let activeEpisodeIndex = 0;
   let visibleCount = 0;
-  const PAGE_SIZE = 8;
+  const PAGE_SIZE = 99;
   const accents = ["blue", "orange", "blue", "orange"];
+  const FILTER_ALL = "全部作品";
+  const CATEGORY_ORDER =
+    typeof CATEGORIES !== "undefined" && CATEGORIES.length
+      ? CATEGORIES
+      : ["品牌营销", "AI创意", "增长运营", "活动营销", "研究洞察"];
 
   // Delivery speed only — same original files, no re-encode.
   // jsDelivr mirrors the GitHub repo and is usually faster than raw github.io in CN.
@@ -156,47 +163,64 @@
   }
 
   function categories() {
-    const groupKeys =
-      typeof CATEGORY_GROUPS !== "undefined" ? Object.keys(CATEGORY_GROUPS) : [];
-    const buttons = ["全部", ...groupKeys];
-    if (typeof CATEGORIES !== "undefined" && CATEGORIES.length) {
-      return [...buttons, ...CATEGORIES];
-    }
-    const set = new Set(WORKS.map((w) => w.category || w.platform).filter(Boolean));
-    return [...buttons, ...set];
+    return [FILTER_ALL, ...CATEGORY_ORDER];
   }
 
-  function groupMark(p) {
-    if (p === "品牌投放") return "AD";
-    if (p === "栏目成片") return "EP";
-    if (p === "策划运营") return "OPS";
-    return "";
+  function categoryRank(cat) {
+    const i = CATEGORY_ORDER.indexOf(cat);
+    return i < 0 ? 99 : i;
+  }
+
+  function sortedWorks(list) {
+    return list.slice().sort((a, b) => {
+      const ra = categoryRank(a.category || a.group);
+      const rb = categoryRank(b.category || b.group);
+      if (ra !== rb) return ra - rb;
+      return 0;
+    });
+  }
+
+  function updateFilterHint() {
+    if (!filterHintEl) return;
+    if (activeFilter === FILTER_ALL || typeof GROUP_META === "undefined") {
+      filterHintEl.hidden = true;
+      filterHintEl.textContent = "";
+      return;
+    }
+    const meta = GROUP_META[activeFilter];
+    if (!meta) {
+      filterHintEl.hidden = true;
+      return;
+    }
+    filterHintEl.hidden = false;
+    filterHintEl.innerHTML = `<strong>${meta.title}</strong><span class="filter-hint-en">${meta.en}</span><span class="filter-hint-proof">证明 · ${meta.proof}</span>`;
   }
 
   function renderFilters() {
-    const groupKeys =
-      typeof CATEGORY_GROUPS !== "undefined" ? Object.keys(CATEGORY_GROUPS) : [];
     filtersEl.innerHTML = categories()
-      .map((p) => {
-        const isGroup = groupKeys.includes(p);
-        const mark = groupMark(p);
-        const label = isGroup
-          ? `<span class="filter-group-mark" aria-hidden="true">${mark}</span><span>${p}</span>`
-          : p;
-        return `<button class="filter-btn${isGroup ? " filter-group" : ""}${
-          p === "策划运营" ? " filter-group-personal" : ""
-        }${p === activeFilter ? " active" : ""}" type="button" data-filter="${p}">${label}</button>`;
-      })
+      .map(
+        (p) =>
+          `<button class="filter-btn${p === activeFilter ? " active" : ""}" type="button" data-filter="${p}" role="tab" aria-selected="${
+            p === activeFilter ? "true" : "false"
+          }">${p}</button>`
+      )
       .join("");
+    updateFilterHint();
   }
 
   function visibleWorks() {
-    if (activeFilter === "全部") return WORKS;
-    if (typeof CATEGORY_GROUPS !== "undefined" && CATEGORY_GROUPS[activeFilter]) {
-      const set = new Set(CATEGORY_GROUPS[activeFilter]);
-      return WORKS.filter((w) => set.has(w.category));
-    }
-    return WORKS.filter((w) => (w.category || w.platform) === activeFilter);
+    if (activeFilter === FILTER_ALL) return sortedWorks(WORKS);
+    return sortedWorks(
+      WORKS.filter((w) => (w.category || w.group || w.platform) === activeFilter)
+    );
+  }
+
+  function featuredWorks() {
+    const ids =
+      typeof FEATURED_IDS !== "undefined" && FEATURED_IDS.length
+        ? FEATURED_IDS
+        : WORKS.filter((w) => w.featured).map((w) => w.id);
+    return ids.map((id) => WORKS.find((w) => w.id === id)).filter(Boolean);
   }
 
   function mediaMarkup(work, index) {
@@ -243,12 +267,16 @@
   function workCardHtml(work, index, groupLookup, lastGroupRef) {
     const group = workGroupTitleFor(work, groupLookup);
     let prefix = "";
-    if (activeFilter === "全部" && group && group !== lastGroupRef.value) {
-      prefix = `<h3 class="works-group-title">${group}</h3>`;
+    if (activeFilter === FILTER_ALL && group && group !== lastGroupRef.value) {
+      const meta =
+        typeof GROUP_META !== "undefined" ? GROUP_META[work.category] : null;
+      const sub = meta ? `<span class="works-group-en">${meta.en}</span>` : "";
+      prefix = `<h3 class="works-group-title">${group}${sub}</h3>`;
       lastGroupRef.value = group;
     }
     const accent = accents[index % accents.length];
     const num = String(index + 1).padStart(2, "0");
+    const typeLabel = work.typeLabel || work.tag || work.platform || "";
     return `${prefix}
         <article class="work-item" data-id="${work.id}" data-accent="${accent}" style="animation-delay: ${Math.min(index, 8) * 40}ms" tabindex="0" role="button" aria-label="查看 ${work.title}">
           <div class="work-media">
@@ -257,16 +285,46 @@
           <div class="work-body">
             <div class="work-meta">
               <span class="index-dot">${num}</span>
-              <span>${work.category || work.platform || "内容"}</span>
+              <span>${work.category || "内容"}</span>
               <span>·</span>
-              <span>${work.platform || ""}</span>
+              <span>${typeLabel}</span>
               <span>·</span>
               <span>${work.year || ""}</span>
             </div>
             <h3 class="work-title">${work.title}</h3>
-            <p class="work-desc"><span class="work-problem-label">问题</span>${work.problem || work.desc || ""}</p>
+            <p class="work-desc"><span class="work-problem-label">挑战</span>${work.problem || work.desc || ""}</p>
           </div>
         </article>`;
+  }
+
+  function featuredCardHtml(work, index) {
+    const accent = accents[index % accents.length];
+    const typeLabel = work.typeLabel || work.category || "";
+    const metric =
+      work.stats && work.stats[1]
+        ? `${work.stats[1].label} ${work.stats[1].value}`
+        : work.year || "";
+    return `<article class="featured-card" data-id="${work.id}" data-accent="${accent}" tabindex="0" role="button" aria-label="查看 ${work.title}">
+      <div class="featured-media">${mediaMarkup(work, index)}</div>
+      <div class="featured-body">
+        <p class="featured-meta"><span>${work.category || ""}</span><span>${typeLabel}</span></p>
+        <h3 class="featured-title">${work.title}</h3>
+        <p class="featured-desc">${work.problem || work.desc || ""}</p>
+        <p class="featured-result">${metric}</p>
+        <span class="featured-link">查看 Case Study →</span>
+      </div>
+    </article>`;
+  }
+
+  function renderFeatured() {
+    if (!featuredEl) return;
+    const items = featuredWorks();
+    if (!items.length) {
+      featuredEl.innerHTML = "";
+      return;
+    }
+    featuredEl.innerHTML = items.map((w, i) => featuredCardHtml(w, i)).join("");
+    observeCovers(featuredEl);
   }
 
   function renderWorks(reset) {
@@ -325,19 +383,29 @@
   }
 
   function detailMarkup(work) {
+    const resultsText = [work.outputs, work.highlight].filter(Boolean).join(" · ");
     const rows = [
-      ["发现的问题", work.problem],
-      ["怎么解决", work.solve],
-      ["路径", work.method],
-      ["结果", work.outputs],
+      ["01 Background", work.background || [work.platform, work.role, work.year].filter(Boolean).join(" · ")],
+      ["02 Challenge", work.problem || work.desc],
+      ["03 Insight & Strategy", work.insight || work.solve],
+      ["04 Execution", work.method || work.solve],
+      ["05 Results", resultsText || work.outputs],
+      ["06 Reflection", work.reflection || work.resumeLine],
     ].filter(([, v]) => v);
 
-    return `${galleryMarkup(work)}${rows
+    const stats =
+      work.stats && work.stats.length
+        ? `<div class="case-stats">${work.stats
+            .map((s) => `<div class="case-stat"><span>${s.label}</span><strong>${s.value}</strong></div>`)
+            .join("")}</div>`
+        : "";
+
+    return `${galleryMarkup(work)}${stats}<div class="case-steps">${rows
       .map(
         ([label, value], i) =>
-          `<div class="detail-row${i === 0 ? " detail-row--problem" : ""}"><span>${label}</span><p>${value}</p></div>`
+          `<div class="detail-row case-step${i === 1 ? " detail-row--problem" : ""}"><span>${label}</span><p>${value}</p></div>`
       )
-      .join("")}${linksMarkup(work)}`;
+      .join("")}</div>${linksMarkup(work)}`;
   }
 
   function episodesMarkup(work) {
@@ -447,7 +515,13 @@
     player.hidden = false;
     player.classList.toggle("player--deck", isDeck);
     playerTitle.textContent = work.title;
-    playerInfo.textContent = [work.category, work.platform, work.role, work.year]
+    playerInfo.textContent = [
+      work.category,
+      work.typeLabel || work.tag,
+      work.platform,
+      work.role,
+      work.year,
+    ]
       .filter(Boolean)
       .join(" · ");
     playerDetail.innerHTML = `${episodesMarkup(work)}${detailMarkup(work)}`;
@@ -502,21 +576,28 @@
     renderWorks(true);
   });
 
-  listEl.addEventListener("click", (e) => {
-    const item = e.target.closest(".work-item");
-    if (!item) return;
-    const work = WORKS.find((w) => w.id === item.dataset.id);
-    if (work) openCase(work);
-  });
+  function bindWorkOpen(root) {
+    if (!root) return;
+    root.addEventListener("click", (e) => {
+      const item = e.target.closest("[data-id]");
+      if (!item || !root.contains(item)) return;
+      if (!item.classList.contains("work-item") && !item.classList.contains("featured-card")) return;
+      const work = WORKS.find((w) => w.id === item.dataset.id);
+      if (work) openCase(work);
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const item = e.target.closest("[data-id]");
+      if (!item || !root.contains(item)) return;
+      if (!item.classList.contains("work-item") && !item.classList.contains("featured-card")) return;
+      e.preventDefault();
+      const work = WORKS.find((w) => w.id === item.dataset.id);
+      if (work) openCase(work);
+    });
+  }
 
-  listEl.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    const item = e.target.closest(".work-item");
-    if (!item) return;
-    e.preventDefault();
-    const work = WORKS.find((w) => w.id === item.dataset.id);
-    if (work) openCase(work);
-  });
+  bindWorkOpen(listEl);
+  bindWorkOpen(featuredEl);
 
   playerClose.addEventListener("click", closePlayer);
   player.addEventListener("click", (e) => {
@@ -730,6 +811,7 @@
     });
   }
 
+  renderFeatured();
   renderFilters();
   renderWorks(true);
 
