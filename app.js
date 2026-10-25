@@ -75,10 +75,11 @@
     return WORKS.filter((w) => (w.category || w.platform) === activeFilter);
   }
 
-  function mediaMarkup(work) {
+  function mediaMarkup(work, index) {
     const playable = hasPlayable(work);
+    const eager = index < 4;
     const cover = work.cover
-      ? `<img src="${work.cover}" alt="${work.title} 封面" loading="lazy" />`
+      ? `<img src="${work.cover}" alt="${work.title} 封面" loading="${eager ? "eager" : "lazy"}" decoding="async"${eager ? ' fetchpriority="high"' : ""} width="640" height="800" />`
       : "";
     const badge =
       work.episodes && work.episodes.length > 1
@@ -128,7 +129,7 @@
       html += `
         <article class="work-item" data-id="${work.id}" data-accent="${accent}" style="animation-delay: ${index * 60}ms" tabindex="0" role="button" aria-label="查看 ${work.title}">
           <div class="work-media">
-            ${mediaMarkup(work)}
+            ${mediaMarkup(work, index)}
           </div>
           <div class="work-body">
             <div class="work-meta">
@@ -567,5 +568,11 @@
 
   renderFilters();
   renderWorks();
-  initHeroField();
+
+  const startHero = () => initHeroField();
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(startHero, { timeout: 1200 });
+  } else {
+    setTimeout(startHero, 200);
+  }
 })();

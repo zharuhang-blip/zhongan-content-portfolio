@@ -560,6 +560,8 @@ main,
   -webkit-backdrop-filter: blur(var(--blur)) saturate(1.1);
   box-shadow: 0 10px 32px rgba(18, 20, 26, 0.05);
   cursor: pointer;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), background 0.4s var(--ease);
   animation: rise 0.75s var(--ease) both;
 }

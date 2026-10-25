@@ -15,3 +15,7 @@ docs/*.docx
 
 # Original uncompressed videos (keep local; do not publish)
 videos/_raw/
+
+# Local original uncompressed covers/assets
+covers/_orig/
+assets/_orig/
