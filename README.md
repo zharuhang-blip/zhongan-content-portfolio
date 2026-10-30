@@ -1,10 +1,10 @@
 # 查如杭 · 内容作品集
 
 **线上地址（公开，任何人可打开）：**  
-https://zharuhang-blip.github.io/zhongan-content-portfolio/?v=47
+https://zharuhang-blip.github.io/zhongan-content-portfolio/?v=49
 
 **2027届秋招简历：**  
-https://zharuhang-blip.github.io/zhongan-content-portfolio/docs/resume/resume.html?v=47
+https://zharuhang-blip.github.io/zhongan-content-portfolio/docs/resume/resume.html?v=49
 
 仓库：https://github.com/zharuhang-blip/zhongan-content-portfolio  
 
@@ -16,7 +16,7 @@ https://zharuhang-blip.github.io/zhongan-content-portfolio/docs/resume/resume.ht
 python3 -m http.server 8765
 ```
 
-浏览器打开 http://127.0.0.1:8765/?v=47
+浏览器打开 http://127.0.0.1:8765/?v=49
 
 ## 更新线上站点
 
