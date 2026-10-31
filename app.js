@@ -28,11 +28,12 @@
       ? CATEGORIES
       : ["品牌营销", "AI创意", "增长运营", "活动营销", "研究洞察"];
 
-  // Delivery speed only — same original files, no re-encode.
-  // jsDelivr mirrors the GitHub repo and is usually faster than raw github.io in CN.
+  // Prefer same-origin assets on GitHub Pages.
+  // jsDelivr occasionally 403s individual files (e.g. assets/guanxia/*), which looks like
+  // "images not loading" even though github.io itself is fine.
   const REPO = "zharuhang-blip/zhongan-content-portfolio";
-  const USE_CDN = /\.github\.io$/i.test(location.hostname);
-  const CDN_BASE = `https://cdn.jsdelivr.net/gh/${REPO}@main/`;
+  const USE_CDN = false;
+  const CDN_BASE = `https://fastly.jsdelivr.net/gh/${REPO}@main/`;
 
   function encodePath(path) {
     return String(path)

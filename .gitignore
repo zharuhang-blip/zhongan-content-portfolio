@@ -19,3 +19,9 @@ videos/_raw/
 # Local original uncompressed covers/assets
 covers/_orig/
 assets/_orig/
+
+# Guanxia redesign working files
+assets/guanxia/_src/
+assets/guanxia/_export/
+assets/guanxia/_redesign.html
+assets/guanxia/_export_slides.py
